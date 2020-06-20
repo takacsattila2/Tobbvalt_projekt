@@ -1,0 +1,51 @@
+import numpy as np
+import cv2 as cv
+import matplotlib.pyplot as plt
+import time
+
+kernel = np.ones((5,5),np.uint8)#kernel az erode-hoz
+villanas_idok=[]
+
+def kepolvasas_szamolas():
+    ret, frame = cap.read() #kamera képe
+    gray_frame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY) #kép szürkébe
+    ret, frame2 = cv.threshold(gray_frame,253,255,cv.THRESH_BINARY) #kép thresholdolva
+    frame_final=frame2-base_frame #alapkép kivonása, hogy az alapból benne levő fényforrások ne legyenek jelen mint zaj
+    kerneled_f_frame = cv.erode(frame_final,kernel,iterations = 1) #kép erode-álása, tehát az egy-egy maradék zajpixel kivonása
+    cv.imshow('frame1',kerneled_f_frame)
+    frame=np.reshape(kerneled_f_frame,480*640)
+    value=0
+    for i in np.arange(480*640):
+        if(frame[i]==255):
+            value=value+1
+    return value
+
+
+cap = cv.VideoCapture(0) #kamera
+ret, frame = cap.read() #kamera képe
+gray_frame_base = cv.cvtColor(frame, cv.COLOR_BGR2GRAY) #alapkép szürkébe
+ret, base_frame = cv.threshold(gray_frame_base,200,255,cv.THRESH_BINARY) #alapkép thresholdolva
+t0=time.time()
+villanas_idok.append(t0)
+while(True):
+    t1=0
+    val=kepolvasas_szamolas()
+    if(val>10):
+        t1=time.time()
+        villanas_idok.append(t1)
+        t2=0
+        while(kepolvasas_szamolas()!=0):
+            if cv.waitKey(1) & 0xFF == ord('q'):
+                break
+        t2=time.time()
+        villanas_idok.append(t2)
+    if cv.waitKey(1) & 0xFF == ord('q'):
+        break
+
+print(villanas_idok)
+
+#plt.imshow(kerneled_f_frame)
+#plt.show()
+
+cap.release()
+cv.destroyAllWindows()
