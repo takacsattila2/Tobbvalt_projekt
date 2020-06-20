@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # morze abc-s fordíto
 
 MORSE_CODE_DICT = { 'A':'.-', 'a':'.-','B':'-...','b':'-...', 
@@ -44,3 +45,13 @@ def decrypt(message):
     return decipher 
 	
 	encrypt('Szeretem a csokit')
+=======
+# Többvált Projekt
+
+### Anyagok git használatához:
+
+A következő linken találtok anyagot git használatához. Javaslom mindenkinek, hogy olvassátok el ha lesz rá kis időtök, mert hasznos.
+Ez alapvetően nem konkrétan a githubról szól, hanem magáról a git verziókezelésről amit a github is használ. A git parancsokat nem kell ismerni ha github desktopot használunk de a működés és egyes kulcsszavak megértése hasznos lenne.
+
+https://desoft.hu/downloads/git/git_v1.0.pdf
+>>>>>>> d6e34b23ef0625ab27d9b004f402c5c782c039a3
