@@ -20,6 +20,11 @@ def kepolvasas_szamolas():
             value=value+1
     return value
 
+def villanasidok_atszamolas(villanasi_idok):
+    villanas_idok_f=[]
+    for i in np.arange(len(villanasi_idok)-1):
+            villanas_idok_f.append(villanasi_idok[i+1]-villanasi_idok[i])
+    return villanas_idok_f
 
 cap = cv.VideoCapture(0) #kamera
 ret, frame = cap.read() #kamera képe
@@ -42,7 +47,9 @@ while(True):
     if cv.waitKey(1) & 0xFF == ord('q'):
         break
 
+times=villanasidok_atszamolas(villanas_idok)
 print(villanas_idok)
+print(times)
 
 #plt.imshow(kerneled_f_frame)
 #plt.show()
